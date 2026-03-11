@@ -128,38 +128,38 @@ export default function App() {
                       type="checkbox"
                       checked={field.active}
                       disabled={field.required}
-                      onChange={(e) => {
-                        // Převzato z onClick na parentu, tady jen stopPropagation
-                        e.stopPropagation();
-                        updateField(field.id, 'active', e.target.checked);
-                      }}
+                      readOnly
                       className="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       title={field.required ? "Toto pole je povinné" : "Zahrnout do JSON objektu"}
                     />
                   </div>
-                  <div className="flex-1 min-w-0" onClick={(e) => e.stopPropagation()}>
-                    <label 
-                      className="block text-base font-medium text-slate-800 mb-1 break-words cursor-default"
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                  <div className="flex-1 min-w-0">
+                    <label className="block text-base font-medium text-slate-800 mb-1 break-words cursor-pointer">
                       {field.label} {field.required && <span className="text-red-500">*</span>}
                     </label>
-                    <input
-                      type={field.type}
-                      value={field.value}
-                      onChange={(e) => {
-                        if (field.fixed) return;
-                        updateField(field.id, 'value', e.target.value);
-                        if (!field.active && e.target.value !== '') {
-                          updateField(field.id, 'active', true);
-                        }
-                      }}
-                      maxLength={field.maxLength}
-                      min={field.min}
-                      disabled={field.fixed || (!field.active && !field.required)}
-                      placeholder="Není vyplněno"
-                      className={`w-full box-border px-3 py-2 text-base border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${field.fixed || (!field.active && !field.required) ? 'bg-slate-100 text-slate-500 border-slate-200 cursor-not-allowed' : 'bg-white border-slate-300'}`}
-                    />
+                    <div onClick={(e) => {
+                      // Pokud je pole neaktivní, chceme aby kliknutí do inputu aktivovalo kartu
+                      if (!field.active && !field.required) {
+                        // onClick na parentu se postará o aktivaci
+                      } else if (field.active) {
+                        // Pokud je aktivní, zastavíme probublávání aby šlo do inputu psát
+                        e.stopPropagation();
+                      }
+                    }}>
+                      <input
+                        type={field.type}
+                        value={field.value}
+                        onChange={(e) => {
+                          if (field.fixed) return;
+                          updateField(field.id, 'value', e.target.value);
+                        }}
+                        maxLength={field.maxLength}
+                        min={field.min}
+                        disabled={field.fixed || (!field.active && !field.required)}
+                        placeholder="Není vyplněno"
+                        className={`w-full box-border px-3 py-2 text-base border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${field.fixed || (!field.active && !field.required) ? 'bg-slate-100 text-slate-500 border-slate-200 cursor-not-allowed' : 'bg-white border-slate-300'}`}
+                      />
+                    </div>
                     <p className="text-sm text-slate-500 mt-1.5 leading-snug break-words">{field.desc}</p>
                   </div>
                 </div>
