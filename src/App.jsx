@@ -6,7 +6,7 @@ export default function App() {
   const [fields, setFields] = useState([
     { id: 'ico', label: 'IČO', type: 'text', value: '62157612', active: true, required: true, fixed: true, desc: 'Povinné a pevně dané (IČO organizace)' },
     { id: 'course_name', label: 'Účel platby', type: 'text', value: 'Registrační poplatek skaut 2026', active: true, required: false, desc: 'Max. 100 znaků', maxLength: 100 },
-    { id: 'course_date', label: 'Datum splatnosti', type: 'date', value: '2024-03-01', active: true, required: false, desc: 'Datum ke kterému je nutné uhradit kredity' },
+    { id: 'course_date', label: 'Datum splatnosti', type: 'date', value: new Date().toISOString().split('T')[0], active: true, required: false, desc: 'Datum ke kterému je nutné uhradit kredity' },
     { id: 'course_id', label: 'ID kurzu', type: 'text', value: '', active: false, required: false, desc: 'Max. 40 znaků', maxLength: 40 },
     { id: 'course_price', label: 'Celková cena', type: 'number', value: '2000', active: true, required: false, desc: 'Kladné číslo (např. 2000)', min: 1 },
     { id: 'amount', label: 'Částka ke stržení (kredit)', type: 'number', value: '1600', active: true, required: false, desc: 'Kladné číslo. Pokud rodič nemá dost kreditů, bude muset částku ručně upravit doplatkem.', min: 1 },
