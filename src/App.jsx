@@ -114,19 +114,34 @@ export default function App() {
             
             <div className="space-y-3">
               {fields.map((field) => (
-                <div key={field.id} className={`flex items-start gap-2 sm:gap-3 p-3 rounded-xl border transition-colors ${field.active ? 'bg-indigo-50/30 border-indigo-100' : 'bg-slate-50 border-slate-200'}`}>
+                <div 
+                  key={field.id} 
+                  onClick={() => {
+                    if (!field.required) {
+                      updateField(field.id, 'active', !field.active);
+                    }
+                  }}
+                  className={`flex items-start gap-2 sm:gap-3 p-3 rounded-xl border transition-all ${field.required ? '' : 'cursor-pointer hover:shadow-md'} ${field.active ? 'bg-indigo-50/30 border-indigo-100' : 'bg-slate-50 border-slate-200 opacity-70'}`}
+                >
                   <div className="pt-1.5 sm:pt-2.5">
                     <input
                       type="checkbox"
                       checked={field.active}
                       disabled={field.required}
-                      onChange={(e) => updateField(field.id, 'active', e.target.checked)}
-                      className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      onChange={(e) => {
+                        // Převzato z onClick na parentu, tady jen stopPropagation
+                        e.stopPropagation();
+                        updateField(field.id, 'active', e.target.checked);
+                      }}
+                      className="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       title={field.required ? "Toto pole je povinné" : "Zahrnout do JSON objektu"}
                     />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <label className="block text-base font-medium text-slate-800 mb-1 break-words">
+                  <div className="flex-1 min-w-0" onClick={(e) => e.stopPropagation()}>
+                    <label 
+                      className="block text-base font-medium text-slate-800 mb-1 break-words cursor-default"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {field.label} {field.required && <span className="text-red-500">*</span>}
                     </label>
                     <input
