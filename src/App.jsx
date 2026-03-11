@@ -126,7 +126,7 @@ export default function App() {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <label className="block text-sm font-medium text-slate-800 mb-1 break-words">
+                    <label className="block text-base font-medium text-slate-800 mb-1 break-words">
                       {field.label} {field.required && <span className="text-red-500">*</span>}
                     </label>
                     <input
@@ -143,9 +143,9 @@ export default function App() {
                       min={field.min}
                       disabled={field.fixed || (!field.active && !field.required)}
                       placeholder="Není vyplněno"
-                      className={`w-full px-3 py-2 text-sm sm:text-base border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${field.fixed || (!field.active && !field.required) ? 'bg-slate-100 text-slate-500 border-slate-200 cursor-not-allowed' : 'bg-white border-slate-300'}`}
+                      className={`w-full box-border px-3 py-2 text-base border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${field.fixed || (!field.active && !field.required) ? 'bg-slate-100 text-slate-500 border-slate-200 cursor-not-allowed' : 'bg-white border-slate-300'}`}
                     />
-                    <p className="text-xs text-slate-500 mt-1.5 leading-snug break-words">{field.desc}</p>
+                    <p className="text-sm text-slate-500 mt-1.5 leading-snug break-words">{field.desc}</p>
                   </div>
                 </div>
               ))}
