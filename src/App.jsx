@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Copy, Link as LinkIcon, CheckCircle2, Code2 } from 'lucide-react';
+import { Copy, Link as LinkIcon, CheckCircle2, Code2, QrCode } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 
 export default function App() {
   // Pevně definovaná struktura polí podle specifikace
@@ -212,6 +213,24 @@ export default function App() {
                   {copiedUrl ? <CheckCircle2 size={18} /> : <Copy size={18} />}
                   {copiedUrl ? 'Zkopírováno!' : 'Kopírovat link'}
                 </button>
+
+                <div className="bg-white p-6 rounded-xl flex flex-col items-center gap-4">
+                  <div className="flex items-center gap-2 text-slate-800 font-semibold mb-2">
+                    <QrCode className="w-5 h-5" />
+                    <span>QR Kód pro mobil</span>
+                  </div>
+                  <div className="p-4 bg-slate-50 rounded-lg border border-slate-100 shadow-inner">
+                    <QRCodeSVG 
+                      value={generatedUrl} 
+                      size={200}
+                      level={"H"}
+                      includeMargin={false}
+                    />
+                  </div>
+                  <p className="text-xs text-slate-500 text-center">
+                    Naskenujte telefonem pro okamžitý přístup k nabídce.
+                  </p>
+                </div>
               </div>
             </div>
 
